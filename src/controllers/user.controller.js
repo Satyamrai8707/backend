@@ -40,7 +40,17 @@ const registerUser = asyncHandler( async (req,res) =>{
     }
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImgLocalPath = req.files?.coverImg[0]?.path; 
+    // const coverImgLocalPath = req.files?.coverImg[0]?.path; 
+
+    let coverImgLocalPath 
+    
+    if (req.files && Array.isArray(req.files.coverImg)
+         && req.files.coverImg.length > 0) 
+        {
+            coverImgLocalPath = req.files.coverImg[0].path
+        }
+
+    
 
     if (!avatarLocalPath) {
         throw new apiError(400,"Avatar file is required")
@@ -77,11 +87,7 @@ const registerUser = asyncHandler( async (req,res) =>{
     )
 
 
-    
-
-    // res.status(200).json({
-    //     message : "Success"
-    // })
+ 
 })
 
 export {registerUser}
