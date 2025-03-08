@@ -18,7 +18,6 @@ const registerUser = asyncHandler( async (req,res) =>{
     // return
 
      const {username, fullname, email, password} = req.body
-     console.log(email,password);
 
     if (
         [username, fullname, email, password].some((field)=>
@@ -31,7 +30,7 @@ const registerUser = asyncHandler( async (req,res) =>{
         throw new apiError(400, "Email should be correct");
     }
 
-   const existedUser = User.find({
+   const existedUser = await User.findOne({
         $or : [{ username },{ email  }]
     })
 
